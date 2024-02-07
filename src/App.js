@@ -1,24 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import Header from './components/Header';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './style.css'
+import Banner from './components/Banner';
+import Cards from './components/Cards';
+import MoreInfo from './components/MoreInfo';
+import Form from './components/Form';
+import Footer from './components/Footer';
+import { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
+  const [blogs, setBlogs] = useState([]);
+
+  function formSubmitHandler(blog) {
+    setBlogs(prev => [...prev, blog]);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path='/form' element={<Form onFormSubmitHandler={formSubmitHandler} />} />
+        <Route path='/' element={
+          <>
+            <Header />
+            <Banner />
+            <Cards blogs={blogs} />
+            <MoreInfo />
+            <Footer />
+          </>
+        } />
+      </Routes>
+    </Router>
   );
 }
 
